@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP085_U.h>
+#include <idDHT11.h>
 
 /* Connect SCL to analog 5
    Connect SDA to analog 4
@@ -8,6 +9,14 @@
 */
    
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
+int idDHT11pin = 2; //Digital pin for comunications
+int idDHT11intNumber = 0; //interrupt number (must be the one that use the previus defined pin (see table above)
+
+//declaration
+void dht11_wrapper(); // must be declared before the lib initialization
+
+// Lib instantiate
+idDHT11 DHT11(idDHT11pin,idDHT11intNumber,dht11_wrapper);
 
 void displaySensorDetails(void)
 {
@@ -23,6 +32,11 @@ void setup(void)
     Serial.print("error");
     while(1);
   }
+  delay(1000);
+}
+
+void dht11_wrapper() {
+  DHT11.isrCallback();
 }
 
 void loop(void) 
@@ -43,5 +57,24 @@ void loop(void)
     Serial.print("altitude:"); 
     Serial.println(bmp.pressureToAltitude(seaLevelPressure, event.pressure, temperature)); 
   }
-  delay(1000);
+  
+  DHT11.acquire();
+  while (DHT11.acquiring());
+
+  if (DHT11.getStatus() == IDDHTLIB_OK)
+  {
+    Serial.print("humidity:");
+    Serial.println(DHT11.getHumidity(), 2);
+
+    Serial.print("temperature2:");
+    Serial.println(DHT11.getCelsius(), 2);
+
+    Serial.print("dewpoint:");
+    Serial.println(DHT11.getDewPoint());
+
+    Serial.print("dewpoint_slow:");
+    Serial.println(DHT11.getDewPointSlow()); 
+  }
+
+  delay(3000);
 }
