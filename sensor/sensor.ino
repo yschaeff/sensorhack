@@ -32,6 +32,7 @@ void setup(void)
     Serial.print("error");
     while(1);
   }
+ // Serial.println("online");
   delay(1000);
 }
 
@@ -58,6 +59,7 @@ void loop(void)
     Serial.println(bmp.pressureToAltitude(seaLevelPressure, event.pressure, temperature)); 
   }
   
+ 
   DHT11.acquire();
   while (DHT11.acquiring());
 
