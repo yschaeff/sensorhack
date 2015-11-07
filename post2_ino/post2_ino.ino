@@ -27,7 +27,7 @@ void setup(void)
     while(1);
   }
   // For IRQ idDHT11   
-  pinMode(1, INPUT);
+//  pinMode(1, INPUT);
 }
 
 void loop(void) 
@@ -40,13 +40,13 @@ void loop(void)
   {
     Serial.print("Pressure: ");
     Serial.print(event.pressure);
-    Serial.println(" hPa");
+    Serial.println(" :hPa");
     
     float temperature;
     bmp.getTemperature(&temperature);
     Serial.print("Temperature: ");
     Serial.print(temperature);
-    Serial.println(" C");
+    Serial.println(" :C");
 
 //    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
     // This is an estime for haarlem, it will vary.
@@ -55,13 +55,13 @@ void loop(void)
     Serial.print(bmp.pressureToAltitude(seaLevelPressure,
                                         event.pressure,
                                         temperature)); 
-    Serial.println(" m");
+    Serial.println(" :M");
   }
 
   /* Microphone. Just analog value */
   Serial.print("Sound: ");
   Serial.print(analogRead(A2));
-  Serial.println(" Andre");
+  Serial.println(" :Andre");
   
   /* idDHT11*/
   DHT11.acquire();
@@ -70,27 +70,19 @@ void loop(void)
   int result = DHT11.getStatus();
   Serial.print("Humidity: ");
   Serial.print(DHT11.getHumidity(), 2);
-  Serial.println(" %");
+  Serial.println(" :%");
 
   Serial.print("Temperature: ");
   Serial.print(DHT11.getCelsius(), 2);
-  Serial.println(" C");
-
-  Serial.print("Temperature: ");
-  Serial.print(DHT11.getFahrenheit(), 2);
-  Serial.println(" F");
-
-  Serial.print("Temperature: ");
-  Serial.print(DHT11.getKelvin(), 2);
-  Serial.println(" K");
+  Serial.println(" :C");
 
   Serial.print("Dew Point: ");
   Serial.print(DHT11.getDewPoint());
-  Serial.println(" C");
+  Serial.println(" :C");
 
   Serial.print("Dew Point Slow: ");
   Serial.print(DHT11.getDewPointSlow());
-  Serial.println(" C");
+  Serial.println(" :C");
 
   delay(1000);
 }
