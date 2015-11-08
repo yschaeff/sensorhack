@@ -54,13 +54,16 @@ def run(dev):
                                 "usb_serial":buf})
                             #print data
                             try:
-                                response = urllib2.urlopen(req, data, context=ctx)
+                                if ctx:
+                                    response = urllib2.urlopen(req, data, context=ctx)
+                                else:
+                                    response = urllib2.urlopen(req, data)
                                 print "sent report"
                             except httplib.BadStatusLine:
-                                print line
+                                print response
                                 print "fail to send, bad statusline"
-                            except:
-                                print "general error?"
+                           # except:
+                           #     print "general error?"
                             buf.clear()
                             last_submit = now
 
