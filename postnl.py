@@ -48,8 +48,8 @@ def run(dev):
                         if last_submit + 10 < now and len(buf) > 0:
                             print buf
                             data = json.dumps({"uuid":"0xDEADBEEF",
-                                "lat":"48.858093",
-                                "lng":"2.294694",
+                                "lat":"52.1359890",
+                                "lng":"5.333732",
                                 "V":"yuri_01",
                                 "usb_serial":buf})
                             #print data
